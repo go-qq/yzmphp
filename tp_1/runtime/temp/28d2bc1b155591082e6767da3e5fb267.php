@@ -1,0 +1,73 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:77:"/usr/share/nginx/html/tp_1/public/../application/index/view/index/popone.html";i:1533865047;}*/ ?>
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>index</title>
+	<link rel="stylesheet" href="/static/bs/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/css/index.css">
+	<script src="/static/bs/js/jquery.min.js"></script>
+	<script src="/static/layer/layer.js"></script>
+</head>
+<body>
+	<form action="<?php echo url('/xgadmin/index/add'); ?>" method='post' id='zige'>
+		
+		<h3 class='text-center'>获取免费体验资格</h3>
+		<div class="phone fh">
+			姓名
+			<input type="text" placeholder='请填写您的姓名'  class='input' name='name'>
+		</div>
+		<div class="phone">
+			电话
+			<input type="text" placeholder='请填写您的电话'  class='input' id='tel' name='tel'>
+		</div>
+		<div class="phone">
+			使用目的&nbsp;&nbsp;
+			<input type="radio" name='jqr' value='我要使用机器人' checked>&nbsp;我要使用机器人
+			&nbsp;&nbsp;
+			<input type="radio" name='jqr' value='我要代理机器人' class='text'>
+			我要代理机器人
+		</div>
+		<div class="phone">
+			邮箱
+			<input type="text" placeholder='请填写您的邮箱'  class='input' name="eamil">
+		</div>
+		<div class="phone">
+			备注
+			<input type="text" placeholder='请填写您的备注'  class='input' name="bei">
+		</div>
+	
+		<input type="hidden" value="xgzn" name='password'>
+		<div class="submit">
+			<input type='submit'  class='tijiao' id='btn' value='提交'>
+		</div>
+	</form>
+</body>
+<script>
+	$('#btn').click(function  () {
+
+		var phone = document.getElementById('tel').value;
+			if($.trim($('.input')[0].value).length==0){
+					alert('姓名不能为空') 
+		        	return false; 
+			    }else if($.trim($('.input')[1].value).length==0){
+					alert('电话不能为空') 
+		        	return false; 
+			    }else if(!(/^1(3|4|5|7|8)\d{9}$/.test(phone))){
+			    	alert("手机号码格式有误");  
+			        return false;
+			    }else if($.trim($('.input')[2].value).length==0){
+			    	alert("邮箱不能为空");  
+			        return false;
+			    }else if($.trim($('.input')[3].value).length==0){
+			    	alert("备注不能为空");  
+			        return false;
+			    } 
+			
+		//关闭当前iframe页面
+		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+		parent.layer.close(index); //再执行关闭   	
+	})
+
+</script>
+</html>

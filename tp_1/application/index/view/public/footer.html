@@ -1,0 +1,65 @@
+<!-- 底部 --> 
+		<footer>
+			<div class="back"></div>
+			<div class="container">
+				<div class="col-md-3 col-xs-12 text-left h1">
+					<img src="__INDEXS__/img/logo1.png" alt="" width='70%'>
+				</div>
+				
+				<div class="col-md-3 col-xs-12">
+					<h4 class='h4'>联系方式</h4>
+					<p class='Loge'>客服QQ:1424894437</p>	
+					<p class='Loge'>电话:132-3626-8899</p>
+					<p class='Loge'>邮箱:85010300@qq.com</p>
+				</div>
+				
+				<div class="col-md-3 col-xs-12">
+					<p class='h4'>产品案例</p>					
+					<p class='Loge'>房地产</p>	
+					<p class='Loge'>金融</p>
+					<p class='Loge'>销售</p>
+				</div>
+
+				<div class="col-md-3 col-xs-12 ">
+					<img src="__INDEXS__/img/gzh.jpg" alt="" width='35%' class='fImg'>
+					<p class=" h4">关注公众号</p>
+				</div>
+				
+			</div>
+			<br>
+			<hr>
+			<p class="text-center pend">
+				江苏省淮安市浙大网新31号楼
+			</p>
+
+			<p class="text-center pend">
+				Copyright © 2017 苏ICP备18031222号-1 版权所有 江苏希高智能科技有限公司
+			</p>
+		</footer>
+	</body>
+	<script>
+	window.onload=function(){
+			$('.consults').click(function  () {
+			// $('body').css({'overflow-y':'hidden'})
+			layer.open({
+						type: 2,
+						title: " ",
+						fix: false,
+		        		shadeClose: true,
+		        		maxmin: true,
+		        		area: ['505px', '550px'],
+		        		content: "{:url('index/poptwo')}",
+		        		yes: function(index, layero){
+		    				layer.close(index); //如果设定了yes回调，需进行手工关闭
+		  				}
+				})
+		})
+	}
+	var _hmt = _hmt || [];
+	(function() {
+  		var hm = document.createElement("script");
+  		hm.src = "https://hm.baidu.com/hm.js?6b18aea5a7ae1890d81e2e780aed5956";
+  		var s = document.getElementsByTagName("script")[0]; 
+  		s.parentNode.insertBefore(hm, s);
+	})();
+	</script>

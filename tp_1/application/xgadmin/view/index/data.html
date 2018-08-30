@@ -1,0 +1,143 @@
+{layout name="public/layout" /}
+
+<div class="col-md-10">
+	<ol class="breadcrumb">
+	  <li><a href="#"><span class="glyphicon glyphicon-home"></span>&nbsp;首页</a></li>
+	  <li><a href="#">咨询管理</a></li>
+	  <li class="active">试用咨询</li>
+	  <a href="" style="float:right;height:25px;" class="btn btn-success"><span class="glyphicon glyphicon-refresh"></span></a>
+	  <span style="clear:both"></span>
+	</ol>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<button class="btn btn-danger" onclick="delAll()"> <span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;批量删除</button>
+			
+			<div class="pull-right" style="margin-left:30px;"><p class="tot">共有数据:&nbsp;<b id="tot">{$count}</b>&nbsp;条</p></div>
+			<form class="form-inline pull-right" action="" role="form" >
+				<div class="form-group">
+					<input type="text" name="search" class="form-control" placeholder="请输入要搜索内容">
+				</div>
+				<button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-search">&nbsp;搜索</span></button>
+			</form>
+		</div>
+		<div class="panel-body">
+            <table class="table table-bordered table-hover">
+                <tr>
+                	<th>
+                       	<input type="checkbox" name=""   class='checkAll'>
+                    </th>
+					<td>id</td>
+     				<td>姓名</td>
+     				<td>电话</td>
+     				<td>邮箱</td>
+     				<td>备注</td>
+     				<td>试用目的</td>
+     				<td>时间</td>
+     				<td>处理状态</td>
+     				<td>删除</td>
+				</tr>
+				{volist name='list' id='value'}
+				<tr id="tr{$value.id}">
+					<th>
+                        <input type="checkbox" name=""  value="{$value.id}" class='checks'>
+                    </th>
+					<th>{$value['id']}</th>
+					<th>{$value['name']}</th>
+					<th>{$value['tel']}</th>
+					<th>{$value['eamil']}</th>
+					<th>{$value['bei']}</th>
+					<th>{$value['jqr']}</th>
+					<th>{$value['time'] | date='Y-m-d H:i',###}</th>
+					<th>
+						{if condition="$value.statu eq 1"}
+	                        <button class='btn btn-info' onclick="status(this,{$value.id},{$value.statu})">已回访</button>
+	                        {else /}
+	                        <button class='btn btn-danger' onclick="status(this,{$value.id},{$value.statu})">未回访</button>
+                        {/if}
+					</th>
+					<th>
+						<input type="submit" value='删除' class='btn btn-danger' onclick='del(this,{$value.id})'>
+					</th>
+				</tr>
+				{/volist}
+            </table>  
+        </div>
+		<div class="panel-footer">
+			{$page}
+		</div>
+	</div>
+</div>
+
+<script>
+	//删除方法
+	function del (obj,id) {
+		
+		//发生sql语句
+		$.post("{:url('ajax_del1')}",{id:id},function  (data) {
+				if (data.statu==200) {
+					$(obj).parent().parent().remove();
+					   num =$('#tot').html();
+			           num=parseInt(num); 
+			           $('#tot').html(--num) 
+					alert(data.info);
+				}else{
+					alert(data.info);
+				}
+		})
+	}
+
+	//批量删除
+ $('.checkAll').click(function  () {
+   $('.checks').click();
+ })
+
+function delAll () {
+    datas=$('.checks:checked');
+    arr=new Array();
+
+    for(i=0;i<datas.length;i++){
+        arr[i]=datas.eq(i).val();
+    }
+
+    str=arr.join(',',arr);
+    $.post("{:url('ajax_delAll')}",{str:str},function  (data) {
+        if (data==arr.length) {
+            for(i=0;i<arr.length;i++){
+                $('#tr'+arr[i]).remove();
+                num =$('#tot').html();
+	            num=parseInt(num); 
+	            $('#tot').html(--num)
+            }
+        }else{
+            alert('删除失败!');
+        } 
+    })
+
+}
+
+
+    //状态
+    function status (obj,id,val) {
+        if (val) {
+            $.post("{:url('ajax_status')}",{id:id,statu:0},function  (data) {
+                   if (data==1) {
+                        $(obj).html('未回访');
+                        $(obj).attr('class','btn btn-danger');
+                        $(obj).attr("onclick","status(this,"+id+",0)")
+                    }else{
+                        alert('修改失败!')
+                    }; 
+            })
+        }else{
+            $.post("{:url('ajax_status')}",{id:id,statu:1},function  (data) {
+                if (data==1) {
+                    $(obj).html('已回访');
+                    $(obj).attr('class','btn btn-info');
+                    $(obj).attr("onclick","status(this,"+id+",1)")
+                }else{
+                    alert('修改失败!')
+                }
+            })
+        };
+    }
+</script>
